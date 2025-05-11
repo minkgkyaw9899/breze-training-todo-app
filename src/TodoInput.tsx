@@ -1,11 +1,26 @@
-import { FC, useState } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
+import { Todo } from "./App";
 
 type Props = {
   addTodo: (input: string) => void;
+  isUpdate: boolean;
+  setIsUpdate: Dispatch<SetStateAction<boolean>>;
+  input: string;
+  setInput: Dispatch<SetStateAction<string>>;
+  todo: Todo[];
+  setTodo: Dispatch<SetStateAction<Todo[]>>;
+  updateTodoId: string;
 };
-const TodoInput: FC<Props> = ({ addTodo }) => {
-  const [input, setInput] = useState("");
-
+const TodoInput: FC<Props> = ({
+  addTodo,
+  isUpdate,
+  setIsUpdate,
+  input,
+  setInput,
+  todo,
+  updateTodoId,
+  setTodo,
+}) => {
   return (
     <div className="my-10 flex justify-center items-center gap-2">
       <input
@@ -16,13 +31,35 @@ const TodoInput: FC<Props> = ({ addTodo }) => {
       />
       <button
         onClick={() => {
-          if (input?.trim() === "") return;
-          addTodo(input);
-          setInput("");
+          if (isUpdate && updateTodoId) {
+            setIsUpdate(false);
+            // todo: update todo
+            const newTodo = todo.map((item) => {
+              if (item.id === updateTodoId) {
+                return {
+                  ...item,
+                  title: input,
+                };
+              }
+              return item;
+            });
+            setInput("");
+            return setTodo(newTodo);
+          }
+
+          if (!isUpdate) {
+            if (input?.trim() === "") return;
+            addTodo(input);
+            setInput("");
+          }
         }}
-        className="bg-indigo-500 h-12 px-5 rounded text-white active:bg-indigo-400"
+        className={` h-12 px-5 rounded text-white  ${
+          isUpdate
+            ? "bg-green-500 active:bg-green-600"
+            : "bg-indigo-500 active:bg-indigo-400"
+        }`}
       >
-        Add
+        {isUpdate ? "Update" : "Add"}
       </button>
     </div>
   );

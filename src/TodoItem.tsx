@@ -3,9 +3,10 @@ import { Todo } from "./App";
 
 type Props = Todo & {
   deleteTodo: (id: string) => void;
+  editTodo: (id: string, title: string) => void;
 };
 
-const TodoItem: FC<Props> = ({ title, id, deleteTodo }) => {
+const TodoItem: FC<Props> = ({ title, id, deleteTodo, editTodo }) => {
   return (
     <div className=" flex items-center w-2/4 gap-4 bg-indigo-100 px-10 py-4">
       <p className="w-full text-wrap">{title}</p>
@@ -15,7 +16,10 @@ const TodoItem: FC<Props> = ({ title, id, deleteTodo }) => {
       >
         Delete
       </button>
-      <button className="bg-green-500 h-12 px-2 rounded text-white">
+      <button
+        onClick={() => editTodo(id, title)}
+        className="bg-green-500 h-12 px-2 rounded text-white"
+      >
         Edit
       </button>
     </div>
