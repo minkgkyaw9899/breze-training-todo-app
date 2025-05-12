@@ -1,26 +1,17 @@
-import { Dispatch, FC, SetStateAction } from "react";
-import { Todo } from "./App";
+import { FC, useContext, useState } from "react";
+import TodoContext from "./context/todoContext";
 
-type Props = {
-  addTodo: (input: string) => void;
-  isUpdate: boolean;
-  setIsUpdate: Dispatch<SetStateAction<boolean>>;
-  input: string;
-  setInput: Dispatch<SetStateAction<string>>;
-  todo: Todo[];
-  setTodo: Dispatch<SetStateAction<Todo[]>>;
-  updateTodoId: string;
-};
-const TodoInput: FC<Props> = ({
-  addTodo,
-  isUpdate,
-  setIsUpdate,
-  input,
-  setInput,
-  todo,
-  updateTodoId,
-  setTodo,
-}) => {
+const TodoInput: FC = () => {
+  const [input, setInput] = useState("");
+  const { addTodoHandler, editTodo, updateTodoHandler } =
+    useContext(TodoContext);
+
+  if (editTodo?.title) {
+    setInput(editTodo.title);
+  }
+
+  const isUpdate = !!editTodo;
+
   return (
     <div className="my-10 flex justify-center items-center gap-2">
       <input
@@ -30,6 +21,24 @@ const TodoInput: FC<Props> = ({
         placeholder="Add Todo here"
       />
       <button
+        onClick={() => {
+          if (input?.trim() === "") return;
+          if (isUpdate) {
+            updateTodoHandler(input);
+          } else {
+            addTodoHandler(input);
+          }
+          setInput("");
+        }}
+        className={` h-12 px-5 rounded text-white  ${
+          isUpdate
+            ? "bg-green-500 active:bg-green-600"
+            : "bg-indigo-500 active:bg-indigo-400"
+        }`}
+      >
+        {isUpdate ? "Update" : "Add"}
+      </button>
+      {/*  <button
         onClick={() => {
           if (isUpdate && updateTodoId) {
             setIsUpdate(false);
@@ -60,7 +69,7 @@ const TodoInput: FC<Props> = ({
         }`}
       >
         {isUpdate ? "Update" : "Add"}
-      </button>
+      </button> */}
     </div>
   );
 };

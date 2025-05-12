@@ -1,26 +1,19 @@
-import { FC } from "react";
-import { Todo } from "./App";
+import { FC, useContext } from "react";
 import TodoItem from "./TodoItem";
+import TodoContext from "./context/todoContext";
 
-type Props = {
-  todo: Todo[];
-  deleteTodo: (id: string) => void;
-  editTodo: (id: string, title: string) => void;
-};
+// type Props = {
+//   deleteTodo: (id: string) => void;
+//   editTodo: (id: string, title: string) => void;
+// };
 
-const TodoList: FC<Props> = ({ todo, deleteTodo, editTodo }) => {
+const TodoList: FC = () => {
+  const { todo } = useContext(TodoContext);
+
   return (
     <div className="flex justify-center items-center flex-col gap-4">
       {todo.map((todo) => {
-        return (
-          <TodoItem
-            deleteTodo={deleteTodo}
-            editTodo={editTodo}
-            title={todo.title}
-            id={todo.id}
-            key={todo.id}
-          />
-        );
+        return <TodoItem title={todo.title} id={todo.id} key={todo.id} />;
       })}
     </div>
   );
