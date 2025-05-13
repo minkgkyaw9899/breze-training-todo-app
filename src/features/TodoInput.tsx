@@ -1,14 +1,18 @@
-import { FC, useContext, useState } from "react";
-import TodoContext from "./context/todoContext";
+import { FC, useContext, useEffect, useState } from "react";
+import TodoContext from "../context/todoContext";
 
 const TodoInput: FC = () => {
   const [input, setInput] = useState("");
   const { addTodoHandler, editTodo, updateTodoHandler } =
     useContext(TodoContext);
 
-  if (editTodo?.title) {
-    setInput(editTodo.title);
-  }
+  useEffect(() => {
+    if (editTodo?.title) {
+      setInput(editTodo.title);
+    } else {
+      setInput("");
+    }
+  }, [editTodo]);
 
   const isUpdate = !!editTodo;
 

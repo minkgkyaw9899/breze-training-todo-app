@@ -1,7 +1,5 @@
-import TodoInput from "./TodoInput";
-import TodoList from "./TodoList";
 import Title from "./components/Title";
-import TodoProvider from "./providers/TodoProvider";
+import TodoListData from "./TodoListData";
 
 export type Todo = {
   id: string;
@@ -12,10 +10,7 @@ const App = () => {
   return (
     <div className="">
       <Title />
-      <TodoProvider>
-        <TodoInput />
-        <TodoList />
-      </TodoProvider>
+      <TodoListData />
     </div>
   );
 };

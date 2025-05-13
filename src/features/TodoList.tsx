@@ -1,6 +1,6 @@
 import { FC, useContext } from "react";
 import TodoItem from "./TodoItem";
-import TodoContext from "./context/todoContext";
+import TodoContext from "../context/todoContext";
 
 // type Props = {
 //   deleteTodo: (id: string) => void;
