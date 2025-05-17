@@ -1,5 +1,5 @@
 import { FC, useContext } from "react";
-import { Todo } from "../App";
+import { Todo } from "../../App";
 import TodoContext from "../context/todoContext";
 
 type Props = Todo & {};

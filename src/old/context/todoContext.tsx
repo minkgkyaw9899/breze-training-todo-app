@@ -1,5 +1,5 @@
 import { createContext, Dispatch, SetStateAction } from "react";
-import { Todo } from "../App";
+import { Todo } from "../../App";
 
 export type ContextData = {
   todo: Todo[];
